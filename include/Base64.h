@@ -46,13 +46,6 @@ int base64_encode( unsigned char *dst, int *dlen, const unsigned char *src, int 
  */
 int base64_decode( unsigned char *dst, int *dlen, const unsigned char *src, int  slen );
 
-/**
- * \brief          Checkup routine
- *
- * \return         0 if successful, or 1 if the test failed
- */
-int base64_self_test( void );
-
 #ifdef __cplusplus
 }
 #endif

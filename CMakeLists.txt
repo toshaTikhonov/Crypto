@@ -175,7 +175,7 @@ if (BUILD_HELPERS_TESTING)
             set(LIBS ${LIBS} ${SUBUNIT_LIBRARIES})
         endif ()
 
-        set(TESTS helpers_test)
+        set(TESTS crypto_test)
 
         configure_file(
                 "${CMAKE_MODULE_PATH}/CTestCustom.cmake.in"
@@ -262,7 +262,7 @@ option(BUILD_RPM "Build a RPM for your system" OFF)
 if (BUILD_RPM)
   set(CPACK_GENERATOR "TGZ")
   set(CPACK_RPM_PACKAGE_LICENSE "LGPL")
-  set(CPACK_RPM_PACKAGE_URL "https://armshine.net:3000/tosha/Helpers/")
+  set(CPACK_RPM_PACKAGE_URL "https://armshine.net:3000/tosha/Crypto/")
 endif ()
 
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "support@armshine.net")
