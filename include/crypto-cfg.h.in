@@ -1,0 +1,19 @@
+/**
+ * 
+ * Crypto Framework
+ * 
+ * Crypto framework library
+ * 
+ * crypto-cfg.h: configuration file
+ * 
+ * Copyright 2020 Anton Tikhonov <support@armshine.net>
+ *
+ *
+ */
+
+#ifndef __CRYPTO_CFG_H__
+#define __CRYPTO_CFG_H__
+
+#define CRYPTO_VERSION ${PROJECT_VERSION}
+
+#endif /* __CRYPTO_CFG_H__ */

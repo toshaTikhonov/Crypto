@@ -1,0 +1,60 @@
+/*  
+******************************************************************************
+
+  Subversion details:
+
+  $HeadURL: $
+
+  $LastChangedRevision: $
+
+  $LastChangedDate: $
+
+  $LastChangedBy: $
+
+------------------------------------------------------------------------------
+*/
+/**
+
+  @file  Crypto.urc
+
+  @brief Unified result codes for Crypto module.
+
+  @author  ������ ��������, ���, 2011
+
+******************************************************************************
+*/
+
+#ifndef __CRYPTO_URC__
+#define __CRYPTO_URC__
+
+
+
+
+
+enum
+{
+  URC_CRYPTO_XXX = 0x00,
+  URC_CRYPTO_INVALID_PARAMETER,
+  URC_CRYPTO_GENERAL_ERROR,
+  URC_CRYPTO_ERROR_WHILE_3DES_ENC_FIRST_PHASE,
+  URC_CRYPTO_ERROR_WHILE_3DES_ENC_SECOND_PHASE,
+  URC_CRYPTO_ERROR_WHILE_3DES_DEC_FIRST_PHASE,
+  URC_CRYPTO_ERROR_WHILE_3DES_DEC_SECOND_PHASE,
+  URC_CRYPTO_MAC_INVALID_MAC_PADDING_TYPE,
+  URC_CRYPTO_MAC_INVALID_MAC_FORMAT,
+  URC_CRYPTO_DES_CALCULATION_FAILED_ON_MAC,
+  URC_CRYPTO_INVALID_MAC_STANDARD,
+  URC_CRYPTO_MESSAGE_TOO_LONG_TO_CALC_MAC,
+  URC_CRYPTO_INVALID_MAC_FORMAT,
+  URC_CRYPTO_LOAD_MAC_KEY_FAILED,
+  URC_CRYPTO_MAC_FAILED,
+  URC_CRYPTO_PRNG_INIT_FAILED,
+  URC_CRYPTO_PRNG_RANDOM_FAILED,
+  URC_CRYPTO_HASH_WRONG_ALGORITHM,
+
+};
+#define UMC_OK           0x0000L
+#define URC_OK           UMC_OK
+
+
+#endif /* __CRYPTO_URC__ */
