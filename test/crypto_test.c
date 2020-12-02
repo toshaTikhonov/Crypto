@@ -14,6 +14,7 @@
 #include "Des.h"
 #include "Sha1.h"
 #include "Rsa.h"
+#include "HashPr.h"
 
 static const unsigned char base64_test_dec[64] =
         {
@@ -274,6 +275,12 @@ START_TEST( des_self_test )
 }
 END_TEST
 
+
+START_TEST(sha1_self_test)
+{
+    Sha1Context sha;
+    int i, j;
+    UINT8 Message_Digest[20];
 /*
  *  Define patterns for testing
  */
@@ -288,37 +295,16 @@ END_TEST
 /* an exact multiple of 512 bits */
 #define TEST4   TEST4a TEST4b
 
-char* testarray[4] =
-        {
-                TEST1,
-                TEST2,
-                TEST3,
-                TEST4
-        };
+    char* testarray[4] =
+            {
+                    TEST1,
+                    TEST2,
+                    TEST3,
+                    TEST4
+            };
 
-char* test_names[4] =
-        {
-                "TEST1",
-                "TEST2",
-                "TEST3",
-                "TEST4"
-        };
+    long int repeatcount[4] = { 1, 1, 1000000, 10 };
 
-long int repeatcount[4] = { 1, 1, 1000000, 10 };
-
-char *resultarray[4] =
-        {
-                "\xA9\x99\x3E\x36\x47\x06\x81\x6A\xBA\x3E\x25\x71\x78\x50\xC2\x6C\x9C\xD0\xD8\x9D",
-                "\x84\x98\x3E\x44\x1C\x3B\xD2\x6E\xBA\xAE\x4A\xA1\xF9\x51\x29\xE5\xE5\x46\x70\xF1",
-                "\x34\xAA\x97\x3C\xD4\xC4\xDA\xA4\xF6\x1E\xEB\x2B\xDB\xAD\x27\x31\x65\x34\x01\x6F",
-                "\xDE\xA3\x56\xA2\xCD\xDD\x90\xC7\xA7\xEC\xED\xC5\xEB\xB5\x63\x93\x4F\x46\x04\x52"
-        };
-
-START_TEST(sha1_self_test)
-{
-    Sha1Context sha;
-    int i, j;
-    UINT8 Message_Digest[20];
 
     /*
      *  Perform SHA-1 tests
@@ -414,6 +400,82 @@ coefficient: b5 3b 46 e3 6d 17 22 21 96 80 cc df b6 76 4a c7 8f 54 c0 65 5a a4 8
     }
 }
 END_TEST
+
+
+START_TEST(hashprc_self_test)
+{
+    /*
+    *  Define patterns for testing
+    */
+#define TEST1   "abc"
+#define TEST2a  "abcdbcdecdefdefgefghfghighijhi"
+#define TEST2b  "jkijkljklmklmnlmnomnopnopq"
+#define TEST2   TEST2a TEST2b
+#define TEST3   "a"
+#define TEST4a  "01234567012345670123456701234567"
+#define TEST4b  "01234567012345670123456701234567"
+    /* an exact multiple of 512 bits */
+#define TEST4   TEST4a TEST4b
+
+    long int repeatcount[4] = { 1, 1, 1000000, 10 };
+
+    char *resultarray[4] =
+            {
+                    "\xA9\x99\x3E\x36\x47\x06\x81\x6A\xBA\x3E\x25\x71\x78\x50\xC2\x6C\x9C\xD0\xD8\x9D",
+                    "\x84\x98\x3E\x44\x1C\x3B\xD2\x6E\xBA\xAE\x4A\xA1\xF9\x51\x29\xE5\xE5\x46\x70\xF1",
+                    "\x34\xAA\x97\x3C\xD4\xC4\xDA\xA4\xF6\x1E\xEB\x2B\xDB\xAD\x27\x31\x65\x34\x01\x6F",
+                    "\xDE\xA3\x56\xA2\xCD\xDD\x90\xC7\xA7\xEC\xED\xC5\xEB\xB5\x63\x93\x4F\x46\x04\x52"
+            };
+
+    int i, j;
+    UINT8 Message_Digest[20];
+
+    PCSTR testarray[4];
+
+    testarray[0] = TEST1;
+    testarray[1] = TEST2;
+    testarray[2] = TEST3;
+    testarray[3] = TEST4;
+
+/*
+  PUINT8 test_names[4] =
+  {
+    "TEST1",
+    "TEST2",
+    "TEST3",
+    "TEST4"
+  };
+*/
+
+
+    /*
+    *  Perform SHA-1 tests
+    */
+    for(j = 0; j < 4; ++j)
+    {
+        (void)HashPrc_Reset (HASH_ALGORITHM_SHA1);
+
+        for(i = 0; i < repeatcount[j]; ++i)
+        {
+            (void)HashPrc_Add (HASH_ALGORITHM_SHA1, (PCUINT8)testarray[j], (UINT16)strlen(testarray[j]));
+        }
+
+        (void)HashPrc_Calculate (HASH_ALGORITHM_SHA1);
+
+        MemCpy (
+                Message_Digest,
+                HashPrc_GetResult (HASH_ALGORITHM_SHA1),
+                HashPrc_GetLength (HASH_ALGORITHM_SHA1)
+        );
+
+        if (MemCmp (Message_Digest, resultarray[j], 20))
+        {
+            puts ("error");
+            ck_abort();
+        }
+    }
+
+}END_TEST
 static Suite *crypto_suite(void)
 {
     Suite *s;
@@ -427,6 +489,7 @@ static Suite *crypto_suite(void)
     tcase_add_test(tc_core,des_self_test);
     tcase_add_test(tc_core,sha1_self_test);
     tcase_add_test(tc_core,rsa_self_test);
+    tcase_add_test(tc_core,hashprc_self_test);
     tcase_set_timeout(tc_core, 30);
     suite_add_tcase(s, tc_core);
 

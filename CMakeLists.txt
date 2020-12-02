@@ -278,7 +278,7 @@ set(CPACK_SOURCE_IGNORE_FILES ${PACKAGE_IGNORED_FILES})
 
 include(CPack)
 
-add_custom_target(dist_helpers
+add_custom_target(dist_crypto
         COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 message(STATUS "Build static library: ${BUILD_STATIC}")
