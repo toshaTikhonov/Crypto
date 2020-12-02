@@ -49,17 +49,6 @@ void Md5Input( Md5Context *ctx, PCUINT8 input, UINT16 ilen );
 void Md5Result( Md5Context *ctx, UINT8 output[MD5_HASH_SIZE] );
 
 
-#ifdef DEBUG_SELF_TEST
-
-/**
- * \brief          Checkup routine
- *
- * \return         TRUE if successful, or FALSE if the test failed
- */
-BOOL Md5_SelfTest( void );
-
-#endif /* DEBUG_SELF_TEST */ 
-
 #ifdef __cplusplus
 }
 #endif
