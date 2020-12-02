@@ -87,11 +87,6 @@ URC Des_Cbc_Decrypt (PCUINT8 p_Key,
                      UINT8   p_Padding,
                      PUINT8  p_pOutBuffer);
 
-#ifdef DEBUG_SELF_TEST
-
-BOOL Des_SelfTest (void);
-
-#endif /* #ifdef DEBUG_SELF_TEST */
 
 #ifdef __cplusplus
 }

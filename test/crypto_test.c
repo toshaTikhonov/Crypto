@@ -7,9 +7,11 @@
 #include <time.h>
 
 #include <check.h>
+#include "crt.h"
 #include "Base64.h"
 #include "Md5.h"
 #include "Aes.h"
+#include "Des.h"
 
 static const unsigned char base64_test_dec[64] =
         {
@@ -168,6 +170,107 @@ START_TEST(aes_self_test )
 }
 END_TEST
 
+#define DIM(a) (sizeof(a)/sizeof(a [0]))
+
+START_TEST( des_self_test )
+{
+    struct SSampleDataDes
+    {
+        /* 07.03.2007: [AZ] ASCIIZ здесь только для простоты задания тестовых данных */
+        UINT8 Key  [8 + 1];
+        UINT8 Data [8 + 1];
+
+    } SampleDataDes [] =
+            {
+                    {"43211234", "werttre"},
+                    {"43211234", "\x00\x00\x00\x00\x00\x00\x00\x00"},
+                    {"43211234", "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"},
+                    {"43211234", "\xA5\xA5\xA5\xA5\xA5\xA5\xA5\xA5"},
+                    {"00000000", "werttrew"},
+                    {"43211234", "werttrew"},
+                    {"43211234", "\xA5\xA5\xA5\xA5\xA5\xA5\xA5\xA5"},
+                    {"\x00\x00\x00\x00\x00\x00\x00\x00", "\x00\x00\x00\x00\x00\x00\x00\x00"},
+                    {"\x00\x00\x00\x00\x00\x00\x00\x00", "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"},
+                    {"\x00\x00\x00\x00\x00\x00\x00\x00", "sdfv98dt"},
+                    {"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", "\x00\x00\x00\x00\x00\x00\x00\x00"},
+                    {"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"},
+                    {"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", "d82,c0[z"}
+            };
+
+    struct SSampleData3Des
+    {
+        /* 07.03.2007: [AZ] ASCIIZ здесь только для простоты задания тестовых данных */
+        UINT8 Key  [16 + 1];
+        UINT8 Data [8 + 1];
+
+    } SampleData3Des [] =
+            {
+                    {"432112345793mn2.", "werttres"},
+                    {"43211234fdaf5geh", "\x00\x00\x00\x00\x00\x00\x00\x00"},
+                    {"432112341qdf678j", "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"},
+                    {"43211234aFGASDDS", "\xA5\xA5\xA5\xA5\xA5\xA5\xA5\xA5"},
+                    {"0000000011111111", "werttrew"},
+                    {"4321123443211234", "wert35ew"},
+                    {"4321123443211234", "\xA5\xA5\xA5\xA5\xA5\xA5\xA5\xA5"},
+                    {"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", "\x00\x00\x00\x00\x00\x00\x00\x00"},
+                    {"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"},
+                    {"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", "sdfv98dt"},
+                    {"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", "\x00\x00\x00\x00\x00\x00\x00\x00"},
+                    {"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"},
+                    {"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", "d82,c0[z"}
+            };
+
+    UINT16 i, j;
+    UINT8 CipheredData [8], ClearData [8], EthalonData [8], Key [16];
+
+
+    for (i = 0; i < DIM (SampleDataDes); i++)
+    {
+        (void)Des_Single_Encrypt (SampleDataDes [i].Key, SampleDataDes [i].Data, CipheredData);
+        (void)Des_Single_Decrypt (SampleDataDes [i].Key, CipheredData, ClearData);
+        if (MemCmp (ClearData, SampleDataDes [i].Data, 8))
+        {
+            puts ("error");
+            ck_abort();
+        }
+
+        (void)Des_Triple_Encrypt (SampleData3Des [i].Key, SampleData3Des [i].Data, CipheredData);
+        (void)Des_Triple_Decrypt (SampleData3Des [i].Key, CipheredData, ClearData);
+        if (MemCmp (ClearData, SampleData3Des [i].Data, 8))
+        {
+            puts ("error");
+            ck_abort();
+        }
+    }
+
+    CRT_SeedRandom (1);
+
+    for (i = 0; i < 60000; i ++)
+    {
+        for (j = 0; j < 8; j ++) EthalonData [j] = CRT_GetRandom (0, 255);
+
+        for (j = 0; j < 16; j ++) Key [j] = CRT_GetRandom (0, 255);
+
+        (void)Des_Single_Encrypt (Key, EthalonData, CipheredData);
+        (void)Des_Single_Decrypt (Key, CipheredData, ClearData);
+
+        if (MemCmp (ClearData, EthalonData, 8))
+        {
+            puts ("error");
+            ck_abort();
+        }
+
+        (void)Des_Triple_Encrypt (Key, EthalonData, CipheredData);
+        (void)Des_Triple_Decrypt (Key, CipheredData, ClearData);
+
+        if (MemCmp (ClearData, EthalonData, 8))
+        {
+            puts ("error");
+            ck_abort();
+        }
+    }
+}
+END_TEST
 
 
 static Suite *crypto_suite(void)
@@ -180,6 +283,7 @@ static Suite *crypto_suite(void)
     tcase_add_test(tc_core, base64_self_test);
     tcase_add_test(tc_core,md5_self_test);
     tcase_add_test(tc_core,aes_self_test);
+    tcase_add_test(tc_core,des_self_test);
     tcase_set_timeout(tc_core, 30);
     suite_add_tcase(s, tc_core);
 
