@@ -78,13 +78,6 @@ void crypto_aes_cbc_decrypt( aes_context *ctx,
                       unsigned char *output,
                       int len );
 
-/**
- * \brief          Checkup routine
- *
- * \return         0 if successful, or 1 if the test failed
- */
-int aes_self_test( void );
-
 #ifdef __cplusplus
 }
 #endif
