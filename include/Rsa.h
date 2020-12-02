@@ -35,14 +35,6 @@ URC Rsa_Decrypt (const SRsaInput *p_pRsaInput);
 PUINT8 Rsa_GetResult (void);
 UINT32 Rsa_GetResultLength(void);
 
-
-
-#ifdef DEBUG_SELF_TEST
-
-BOOL Rsa_SelfTest (void);
-
-#endif /* #ifdef DEBUG_SELF_TEST */
-
 #ifdef __cplusplus
 }
 #endif
