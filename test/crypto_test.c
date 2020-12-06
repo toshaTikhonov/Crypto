@@ -233,7 +233,7 @@ START_TEST( des_self_test )
         (void)Des_Single_Decrypt (SampleDataDes [i].Key, CipheredData, ClearData);
         if (MemCmp (ClearData, SampleDataDes [i].Data, 8))
         {
-            puts ("error");
+            puts ("error!");
             ck_abort();
         }
 
