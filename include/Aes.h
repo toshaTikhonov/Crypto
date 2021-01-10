@@ -15,8 +15,7 @@ typedef struct
     UINT32 drk[64];     /*!< decryption round keys */
     INT32 nr;                    /*!< number of rounds      */
 }
-PACKED aes_context;
-
+PACKED aes_context ;
 /**
  * \brief          AES key schedule
  *
