@@ -15,6 +15,7 @@
 #include "Sha1.h"
 #include "Rsa.h"
 #include "HashPr.h"
+#include "Crc.h"
 
 static const unsigned char base64_test_dec[64] =
         {
@@ -476,6 +477,24 @@ START_TEST(hashprc_self_test)
     }
 
 }END_TEST
+START_TEST(crc_self_test)
+{
+    unsigned char test[] = "123456789";
+    int j,i;
+
+    for(j = 0; j < 11; j++)
+    {
+        Crc_Init(j);
+
+        for(i = 0; i < 9; i++)
+        {
+            Crc_AddByte(test[i]);
+        }
+        printf("crc(%d)= 0x%X\n",j,Crc_GetResult());
+    }
+
+}END_TEST
+
 static Suite *crypto_suite(void)
 {
     Suite *s;
@@ -490,18 +509,33 @@ static Suite *crypto_suite(void)
     tcase_add_test(tc_core,sha1_self_test);
     tcase_add_test(tc_core,rsa_self_test);
     tcase_add_test(tc_core,hashprc_self_test);
+    tcase_add_test(tc_core,crc_self_test);
     tcase_set_timeout(tc_core, 30);
     suite_add_tcase(s, tc_core);
 
     return s;
 }
+int crc_self_test2(void)
+{
+    unsigned char test[] = "123456789";
+    int i;
 
+        Crc_Init(10);
+
+        for(i = 0; i < 9; i++)
+        {
+            Crc_AddByte(test[i]);
+        }
+        printf("crc(%d)= 0x%X\n",10,Crc_GetResult());
+    return 0;
+}
 int main(int argc, char *argv[])
 {
   int number_failed;
   Suite *s;
   SRunner *sr;
 
+    crc_self_test2();
   s = crypto_suite();
   sr = srunner_create(s);
 

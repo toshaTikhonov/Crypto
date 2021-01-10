@@ -12,29 +12,25 @@
 #ifndef __CRC_PROCESSOR_H__
 #define __CRC_PROCESSOR_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "bastypes.h"
 
 
 /** Структура, описывающая один алгоритм CRC */
 typedef struct
 {
-    UINT8   Width;      /**< Разрядность CRC (для CRC16 =16) */
-    UINT16  Polynomial; /**< Полином алгоритма, задаётся в бинарном виде, старшая единица не учитывается */
-    UINT16  InitValue;  /**< Начальное значение */
+    UINT8   Width;      /**< Разрядность CRC (для CRC16 =16) (для CRC32 =32)*/
+    UINT32  Polynomial; /**< Полином алгоритма, задаётся в бинарном виде, старшая единица не учитывается */
+    UINT32  InitValue;  /**< Начальное значение */
     BOOL    ReflectIn;  /**< Обращать байты на входе? */
     BOOL    ReflectOut; /**< Обращать конечное значение CRC? */
-    UINT16  XorOutput;  /**< Величина для комбинации по XOR с конечным значением CRC. */
+    UINT32  XorOutput;  /**< Величина для комбинации по XOR с конечным значением CRC. */
 } SCrcAlgorithm, *PSCrcAlgorithm;
 
 
 /** Инициализирует значение регистра 
     @param wInitialValue начальное значение регистра. 
 */
-void CrcPrc_Init(UINT16 wInitialValue);
+void CrcPrc_Init(UINT32 wInitialValue);
 
 
 /** Учитывает новый байт в регистре CRC 
@@ -50,11 +46,8 @@ void CrcPrc_AddByte(PSCrcAlgorithm pCrcParams, UINT8 ucByte);
         алгоритма CRC
     @return Результирующее значение CRC
 */
-UINT16 CrcPrc_GetResult(PSCrcAlgorithm pCrcParams);
+UINT32 CrcPrc_GetResult(PSCrcAlgorithm pCrcParams);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __CRC_PROCESSOR_H__ */
 

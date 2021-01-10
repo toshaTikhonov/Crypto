@@ -6,7 +6,7 @@
 /*===========================================================================*/
 
 /** Число поддерживаемых алгоритмов CRC */
-#define CRC_ALGORITHMS_QUANTITY 10
+#define CRC_ALGORITHMS_QUANTITY 16
 /** Массив описаний параметров поддерживаемых алгоритмов CRC */
 READ_ONLY SCrcAlgorithm CrcAlgorithms[CRC_ALGORITHMS_QUANTITY] =
 {
@@ -23,8 +23,14 @@ READ_ONLY SCrcAlgorithm CrcAlgorithms[CRC_ALGORITHMS_QUANTITY] =
     { 16, 0x8005 , 0xFFFF, TRUE,  TRUE,    0x0000 },/*  #define CRC16_PAYWAVE_ANSI  7*/
     { 16, 0x8005 , 0xFFFF, TRUE,  TRUE,    0x0000 },/*  #define CRC16_ZIP  8*/
     { 8,  0x1D   , 0xC7   , FALSE, FALSE,   0x0000 }, /* #define CRC8_BITMAP  9*/
-
+    { 32,  0x04C11DB7   , 0xFFFFFFFF   , TRUE, TRUE,   0xFFFFFFFF }, /* #define CRC32  10*/
+    { 32,  0x04C11DB7   , 0xFFFFFFFF   , FALSE, FALSE,   0xFFFFFFFF }, /* #define CRC32BZIP2  11*/
+    { 32,  0x1EDC6F41   , 0xFFFFFFFF   ,  TRUE,  TRUE,   0xFFFFFFFF }, /* #define CRC32C  12*/
+    { 32,  0xA833982B   , 0xFFFFFFFF   ,  TRUE,  TRUE,   0xFFFFFFFF }, /* #define CRC32D  13*/
+    { 32,  0x04C11DB7   , 0xFFFFFFFF   , FALSE, FALSE,   0x00000000 }, /* #define CRC32MPEG2  14*/
+    { 32,  0x04C11DB7   , 0x00000000   , FALSE, FALSE,   0xFFFFFFFF }, /* #define CRC32POSIX  15*/
 };
+
 /** Параметры текущего выбранного алгоритма CRC */
 static SCrcAlgorithm s_CurrentCrcAlgorithm;
 
@@ -77,12 +83,23 @@ void Crc_AddBlock(PCUINT8 pData, UINT16 wLength)
 } /* Crc_AddBlock */
 
 /** 
-*  @brief  Получить расчитанное значение CRC
+*  @brief  Получить расчитанное значение CRC (для crc32 своя фунция)
 *
 *  @return Значение полученное путём последовательного вызова функций 
 *        Crc_Init, Crc_AddByte (или Crc_AddBlock).
 */
 UINT16 Crc_GetResult(void)
+{
+    return CrcPrc_GetResult(&s_CurrentCrcAlgorithm);
+} /* Crc_GetResult */
+
+/**
+*  @brief  Получить расчитанное значение CRC32
+*
+*  @return Значение полученное путём последовательного вызова функций
+*        Crc_Init, Crc_AddByte (или Crc_AddBlock).
+*/
+UINT32 Crc_GetResult32(void)
 {
     return CrcPrc_GetResult(&s_CurrentCrcAlgorithm);
 } /* Crc_GetResult */

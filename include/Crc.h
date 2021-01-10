@@ -1,5 +1,5 @@
-#ifndef __CRC_H__
-#define __CRC_H__
+#ifndef __CRCPR_H__
+#define __CRCPR_H__
 
 #include "bastypes.h"
 
@@ -19,6 +19,12 @@
 #define CRC16_PAYWAVE_ANSI                      7
 #define CRC16_ZIP                               8
 #define CRC8_BITMAP                             9
+#define CRC32                                  10
+#define CRC32BZIP2                             11
+#define CRC32C                                 12
+#define CRC32D                                 13
+#define CRC32MPEG2                             14
+#define CRC32POSIX                             15
 
 /*---------------------------------------------------------------------------*/
 /** Инициализация выбранного протокола 
@@ -41,11 +47,17 @@ void Crc_AddByte(UINT8 ucByte);
 */
 void Crc_AddBlock(PCUINT8 pData, UINT16 wLength);
 /*---------------------------------------------------------------------------*/
-/** Получить расчитанное значение CRC
+/** Получить расчитанное значение CRC (для crc32 своя фунция)
     @return Значение полученное путём последовательного вызова функций 
         CryptoPrc_Crc_Init, CryptoPrc_Crc_AddByte (или CryptoPrc_Crc_AddBlock).
 */
 UINT16 Crc_GetResult(void);
+
+/** Получить расчитанное значение CRC32
+    @return Значение полученное путём последовательного вызова функций
+        CryptoPrc_Crc_Init, CryptoPrc_Crc_AddByte (или CryptoPrc_Crc_AddBlock).
+*/
+UINT32 Crc_GetResult32(void);
 
 #endif
 

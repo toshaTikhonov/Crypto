@@ -14,7 +14,7 @@
 
 #define BITMASK(X) (1 << (X))
 /** Регистр, в котором накапливается значение CRC */
-static UINT16 s_wRegister;
+static UINT32 s_wRegister;
 
 
 /** Функция возвращает значение wValue с обращенными ucCount [0,16] младшими битами.
@@ -23,11 +23,11 @@ static UINT16 s_wRegister;
     @param ucCount - число битов, которое нужно обернуть
     @return Значение, с обернутыми битами
 */
-static UINT16 Reflect(UINT16 wValue, UINT8 ucCount)
+static UINT32 Reflect(UINT32 wValue, UINT8 ucCount)
 {
     UINT8 i;
-    UINT16 wTemp, wResult;
-    
+    UINT32 wTemp, wResult;
+
     wTemp = wValue;
     wResult = wValue;
     for (i=0; i < ucCount; i++)
@@ -45,7 +45,7 @@ static UINT16 Reflect(UINT16 wValue, UINT8 ucCount)
 /** Инициализирует значение регистра 
     @param wInitialValue начальное значение регистра. 
 */
-void CrcPrc_Init(UINT16 wInitialValue)
+void CrcPrc_Init(UINT32 wInitialValue)
 {
     s_wRegister = wInitialValue;
 }
@@ -59,22 +59,22 @@ void CrcPrc_Init(UINT16 wInitialValue)
 void CrcPrc_AddByte(PSCrcAlgorithm pCrcParams, UINT8 ucByte)
 {
     UINT8 i;
-    UINT16 wValue, wTopBit;
+    UINT8 wValue;
 
-    wValue = (UINT16)ucByte;
-    wTopBit = BITMASK(pCrcParams->Width - 1);
+    wValue = (UINT8)ucByte;
 
     if (pCrcParams->ReflectIn) 
-        wValue = Reflect(wValue,8);
+        wValue = (UINT8)Reflect(wValue,8);
 
     s_wRegister ^= (wValue << (pCrcParams->Width - 8));
-    for (i=0; i < 8; i++)
+    for (i = 0; i < 8; i++)
     {
-        if (s_wRegister & wTopBit)
+        if (s_wRegister & BITMASK(pCrcParams->Width - 1))
             s_wRegister = (s_wRegister << 1) ^ pCrcParams->Polynomial;
         else
             s_wRegister <<= 1;
-        s_wRegister &= ((1 << pCrcParams->Width) - 1);
+        if(pCrcParams->Width < 32)
+            s_wRegister &= ((1 << pCrcParams->Width) - 1);
     }
 }
 
@@ -84,7 +84,7 @@ void CrcPrc_AddByte(PSCrcAlgorithm pCrcParams, UINT8 ucByte)
         алгоритма CRC
     @return Результирующее значение CRC
 */
-UINT16 CrcPrc_GetResult(PSCrcAlgorithm pCrcParams)
+UINT32 CrcPrc_GetResult(PSCrcAlgorithm pCrcParams)
 {
     if (pCrcParams->ReflectOut)
         return pCrcParams->XorOutput ^ Reflect(s_wRegister, pCrcParams->Width);
