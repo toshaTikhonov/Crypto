@@ -1,6 +1,7 @@
 #include "Prng.h"
 #include "Aes.h"
 #include "Rsaref.h"
+#include "r_random.h"
 
 #define CIPHER_BLOCK_SIZE 16
 #define KEY_SIZE CIPHER_BLOCK_SIZE

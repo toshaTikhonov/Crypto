@@ -10,7 +10,7 @@
  */
 
 #ifndef _RSAREF_H_
-#define _RSAREF_H_ 1
+#define _RSAREF_H_
 
 #include "Global.h"
 
@@ -95,7 +95,7 @@ typedef struct {
   unsigned int bits;                           /* length in bits of modulus */
   unsigned char modulus[MAX_RSA_MODULUS_LEN];                    /* modulus */
   unsigned char exponent[MAX_RSA_MODULUS_LEN];           /* public exponent */
-} R_RSA_PUBLIC_KEY_;
+} R_RSA_PUBLIC_KEY;
 
 typedef struct {
   unsigned int bits;                           /* length in bits of modulus */
@@ -105,7 +105,7 @@ typedef struct {
   unsigned char prime[2][MAX_RSA_PRIME_LEN];               /* prime factors */
   unsigned char primeExponent[2][MAX_RSA_PRIME_LEN];   /* exponents for CRT */
   unsigned char coefficient[MAX_RSA_PRIME_LEN];          /* CRT coefficient */
-} R_RSA_PRIVATE_KEY_;
+} R_RSA_PRIVATE_KEY;
 
 /* RSA prototype key.
  */
@@ -128,12 +128,8 @@ typedef struct {
 /* Key-pair generation.
  */
 int R_GeneratePEMKeys PROTO_LIST
-  ((R_RSA_PUBLIC_KEY_ *, R_RSA_PRIVATE_KEY_ *, R_RSA_PROTO_KEY *,
+  ((R_RSA_PUBLIC_KEY *, R_RSA_PRIVATE_KEY *, R_RSA_PROTO_KEY *,
     R_RANDOM_STRUCT *));
-int R_GenerateBytes PROTO_LIST ((
-        unsigned char *block,                                              /* block */
-        unsigned int blockLen,                                   /* length of block */
-        R_RANDOM_STRUCT *randomStruct));                          /* random structure */
 
 /* Routines supplied by the implementor.
  */

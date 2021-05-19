@@ -59,7 +59,7 @@ set(SRC_FILES
         ${SRC_DIR}/Rsa/Digit.c
         ${SRC_DIR}/Rsa/NN.c
         ${SRC_DIR}/Rsa/R_STDLIB.c
-        ${SRC_DIR}/Rsa/RsaImp.c
+        ${SRC_DIR}/Rsa/r_random.c
         ${SRC_DIR}/crt.c
 		${SRC_DIR}/HashPr.c
 		${SRC_DIR}/Sha1.c
@@ -87,7 +87,6 @@ set(SRC_FILES
         ${INC_DIR}/Prng.h
         ${INC_DIR}/crt.h
         ${INC_DIR}/bastypes.h
-        ${SRC_DIR}/Rsa/RsaImp.h
         )
 # shared library
 

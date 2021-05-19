@@ -5,16 +5,6 @@
      Inc., created 1991. All rights reserved.
  */
 
-/* CHANGES MADE TO THIS FILE UNDER RSAREF 2.0 license clause 1(c):
-
-   For the MIT PGP 2.5 distribution, this file was modified to permit
-   replacement of the NN_ModExp routine by an equivalent routine contained 
-   in the PGP 2.5 sources.  To enable this change, an #ifdef was added to this 
-   file (search for #ifndef USEMPILIB below).  RSAREF *must* be compiled with 
-   USEMPILIB defined for this change to occur.
-
-   Change made May 8, 1994.  */
-
 //#include "global.h"
 #include "Rsaref.h"
 #include "NN.H"
@@ -43,7 +33,7 @@ unsigned int digits, len;
   int j;
   unsigned int i, u;
   
-  for (i = 0, j = (int)len - 1; i < digits && j >= 0; i++) {
+  for (i = 0, j = len - 1; i < digits && j >= 0; i++) {
     t = 0;
     for (u = 0; j >= 0 && u < NN_DIGIT_BITS; j--, u += 8)
       t |= ((NN_DIGIT)b[j]) << u;
@@ -70,7 +60,7 @@ unsigned int digits, len;
   int j;
   unsigned int i, u;
 
-  for (i = 0, j = (int)len - 1; i < digits && j >= 0; i++) {
+  for (i = 0, j = len - 1; i < digits && j >= 0; i++) {
     t = b[i];
     for (u = 0; j >= 0 && u < NN_DIGIT_BITS; j--, u += 8)
       a[j] = (unsigned char)(t >> u);
@@ -252,7 +242,7 @@ unsigned int c, digits;
 
   carry = 0;
 
-  for (i = (int)digits - 1; i >= 0; i--) {
+  for (i = digits - 1; i >= 0; i--) {
     bi = b[i];
     a[i] = (bi >> c) | carry;
     carry = c ? (bi << t) : 0;
@@ -284,25 +274,25 @@ unsigned int cDigits, dDigits;
   shift = NN_DIGIT_BITS - NN_DigitBits (d[ddDigits-1]);
   NN_AssignZero (cc, ddDigits);
   cc[cDigits] = NN_LShift (cc, c, shift, cDigits);
-  (void)NN_LShift (dd, d, shift, ddDigits);
+  NN_LShift (dd, d, shift, ddDigits);
   t = dd[ddDigits-1];
   
   NN_AssignZero (a, cDigits);
 
-  for (i = (int)(cDigits-ddDigits); i >= 0; i--) {
+  for (i = cDigits-ddDigits; i >= 0; i--) {
     /* Underestimate quotient digit and subtract.
      */
     if (t == MAX_NN_DIGIT)
-      ai = cc[i+(int)ddDigits];
+      ai = cc[i+ddDigits];
     else
-      NN_DigitDiv (&ai, &cc[i+(int)ddDigits-1], t + 1);
-    cc[i+(int)ddDigits] -= NN_SubDigitMult (&cc[i], &cc[i], ai, dd, ddDigits);
+      NN_DigitDiv (&ai, &cc[i+ddDigits-1], t + 1);
+    cc[i+ddDigits] -= NN_SubDigitMult (&cc[i], &cc[i], ai, dd, ddDigits);
 
     /* Correct estimate.
      */
-    while (cc[i+(int)ddDigits] || (NN_Cmp (&cc[i], dd, ddDigits) >= 0)) {
+    while (cc[i+ddDigits] || (NN_Cmp (&cc[i], dd, ddDigits) >= 0)) {
       ai++;
-      cc[i+(int)ddDigits] -= NN_Sub (&cc[i], &cc[i], dd, ddDigits);
+      cc[i+ddDigits] -= NN_Sub (&cc[i], &cc[i], dd, ddDigits);
     }
     
     a[i] = ai;
@@ -311,7 +301,7 @@ unsigned int cDigits, dDigits;
   /* Restore result.
    */
   NN_AssignZero (b, dDigits);
-  (void)NN_RShift (b, cc, shift, ddDigits);
+  NN_RShift (b, cc, shift, ddDigits);
 
   /* Zeroize potentially sensitive information.
    */
@@ -348,8 +338,6 @@ unsigned int digits;
 {
   NN_DIGIT t[2*MAX_NN_DIGITS];
 
-  R_memset ((POINTER)t, 0, sizeof (t));
-
   NN_Mult (t, b, c, digits);
   NN_Mod (a, t, 2 * digits, d, digits);
   
@@ -363,24 +351,11 @@ unsigned int digits;
    Lengths: a[dDigits], b[dDigits], c[cDigits], d[dDigits].
    Assumes d > 0, cDigits > 0, dDigits < MAX_NN_DIGITS.
  */
-
-/* PGP 2.5's mpilib contains a faster modular exponentiation routine, mp_modexp.
-   If USEMPILIB is defined, NN_ModExp is replaced in the PGP 2.5 sources with a 
-   stub call to mp_modexp.  If USEMPILIB is not defined, we'll get a pure (albeit
-   slower) RSAREF implementation.
-
-   The RSAREF 2.0 license, clause 1(c), permits "...modify[ing] the Program in any
-   manner for porting or performance improvement purposes..." */
-
-#ifndef USEMPILIB
-
-static   NN_DIGIT bPower[3][MAX_NN_DIGITS], ci, t[MAX_NN_DIGITS];
-
-
 void NN_ModExp (a, b, c, cDigits, d, dDigits)
 NN_DIGIT *a, *b, *c, *d;
 unsigned int cDigits, dDigits;
 {
+  NN_DIGIT bPower[3][MAX_NN_DIGITS], ci, t[MAX_NN_DIGITS];
   int i;
   unsigned int ciBits, j, s;
 
@@ -393,7 +368,7 @@ unsigned int cDigits, dDigits;
   NN_ASSIGN_DIGIT (t, 1, dDigits);
 
   cDigits = NN_Digits (c, cDigits);
-  for (i = (int)cDigits - 1; i >= 0; i--) {
+  for (i = cDigits - 1; i >= 0; i--) {
     ci = c[i];
     ciBits = NN_DIGIT_BITS;
     
@@ -423,7 +398,6 @@ unsigned int cDigits, dDigits;
   R_memset ((POINTER)bPower, 0, sizeof (bPower));
   R_memset ((POINTER)t, 0, sizeof (t));
 }
-#endif
 
 /* Compute a = 1/b mod c, assuming inverse exists.
    
@@ -451,7 +425,7 @@ unsigned int digits;
   while (! NN_Zero (v3, digits)) {
     NN_Div (q, t3, u3, digits, v3, digits);
     NN_Mult (w, q, v1, digits);
-    (void)NN_Add (t1, u1, w, digits);
+    NN_Add (t1, u1, w, digits);
     NN_Assign (u1, v1, digits);
     NN_Assign (v1, t1, digits);
     NN_Assign (u3, v3, digits);
@@ -462,7 +436,7 @@ unsigned int digits;
   /* Negate result if sign is negative.
     */
   if (u1Sign < 0)
-    (void)NN_Sub (a, c, u1, digits);
+    NN_Sub (a, c, u1, digits);
   else
     NN_Assign (a, u1, digits);
 
@@ -483,7 +457,6 @@ unsigned int digits;
    Lengths: a[digits], b[digits], c[digits].
    Assumes b > c, digits < MAX_NN_DIGITS.
  */
-/*lint -e578 */
 void NN_Gcd (a, b, c, digits)
 NN_DIGIT *a, *b, *c;
 unsigned int digits;
@@ -507,7 +480,6 @@ unsigned int digits;
   R_memset ((POINTER)u, 0, sizeof (u));
   R_memset ((POINTER)v, 0, sizeof (v));
 }
-/*lint +e578 */
 
 /* Returns sign of a - b.
 
@@ -519,7 +491,7 @@ unsigned int digits;
 {
   int i;
   
-  for (i = (int)digits - 1; i >= 0; i--) {
+  for (i = digits - 1; i >= 0; i--) {
     if (a[i] > b[i])
       return (1);
     if (a[i] < b[i])
@@ -570,18 +542,17 @@ unsigned int digits;
 {
   int i;
   
-  for (i = (int)digits - 1; i >= 0; i--)
+  for (i = digits - 1; i >= 0; i--)
     if (a[i])
       break;
 
-  return (unsigned int)(i + 1);
+  return (i + 1);
 }
 
 /* Computes a = b + c*d, where c is a digit. Returns carry.
 
    Lengths: a[digits], b[digits], d[digits].
  */
-/*lint -e578 */
 static NN_DIGIT NN_AddDigitMult (a, b, c, d, digits)
 NN_DIGIT *a, *b, c, *d;
 unsigned int digits;
@@ -606,13 +577,11 @@ unsigned int digits;
   
   return (carry);
 }
-/*lint +e578 */
 
 /* Computes a = b - c*d, where c is a digit. Returns borrow.
 
    Lengths: a[digits], b[digits], d[digits].
  */
-/*lint -e578 */
 static NN_DIGIT NN_SubDigitMult (a, b, c, d, digits)
 NN_DIGIT *a, *b, c, *d;
 unsigned int digits;
@@ -637,7 +606,6 @@ unsigned int digits;
   
   return (borrow);
 }
-/*lint +e578 */
 
 /* Returns the significant length of a in bits, where a is a digit.
  */
