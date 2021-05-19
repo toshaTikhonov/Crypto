@@ -2,6 +2,9 @@
 #ifndef __RSA_H__
 #define __RSA_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "bastypes.h"
 #include "Crypto.urc"
