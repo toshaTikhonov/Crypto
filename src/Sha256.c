@@ -166,7 +166,7 @@ void sha256_update(SHA256_CTX* ctx,const UINT8* input,UINT32 ilen)
 /*
  * SHA-256 final digest
  */
-void sha256_final(SHA256_CTX* ctx,UINT8 output[32])
+void sha256_final(SHA256_CTX* ctx,UINT8* output)
 {
     UINT32 used;
     UINT32 high, low;

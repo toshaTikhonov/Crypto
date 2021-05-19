@@ -25,7 +25,7 @@ typedef struct
 
 void sha256_init(SHA256_CTX* ctx);
 void sha256_update(SHA256_CTX* ctx, const UINT8* input, UINT32 len);
-void sha256_final(SHA256_CTX* ctx, UINT8 hash[]);
+void sha256_final(SHA256_CTX* ctx, UINT8* hash);
 
 #ifdef __cplusplus
 }
