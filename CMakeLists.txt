@@ -60,6 +60,11 @@ set(SRC_FILES
         ${SRC_DIR}/Rsa/NN.c
         ${SRC_DIR}/Rsa/R_STDLIB.c
         ${SRC_DIR}/Rsa/r_random.c
+        ${SRC_DIR}/Rsa/Rsaref.h
+        ${SRC_DIR}/Rsa/NN.h
+        ${SRC_DIR}/Rsa/Digit.h
+        ${SRC_DIR}/Rsa/Global.h
+        ${SRC_DIR}/Rsa/r_random.h
         ${SRC_DIR}/crt.c
 		${SRC_DIR}/HashPr.c
 		${SRC_DIR}/Sha1.c
@@ -146,9 +151,9 @@ endif ()
 
 # tests
 
-option(BUILD_HELPERS_TESTING "Build the testing tree." OFF) # because we don not use include(CTest)
+option(BUILD_CRYPTO_TESTING "Build the testing tree." OFF) # because we don not use include(CTest)
 
-if (BUILD_HELPERS_TESTING)
+if (BUILD_CRYPTO_TESTING)
     include(FindCheck)
     find_package(Check)
     if (CHECK_FOUND)
