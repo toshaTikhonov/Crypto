@@ -43,7 +43,7 @@ typedef struct tag_Sha1Context
 
     UINT16 Message_Block_Index;                              /**< Index into message block array */
 
-} PACKED Sha1Context, * PSha1Context;
+} Sha1Context, * PSha1Context;
 
 /*
  *  Function Prototypes

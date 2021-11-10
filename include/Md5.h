@@ -22,8 +22,7 @@ typedef struct
     UINT32 total[2];     /**< number of bytes processed  */
     UINT32 state[4];     /**< intermediate digest state  */
     UINT8 buffer[64];   /**< data block being processed */
-}
-PACKED Md5Context;
+} Md5Context;
 
 /**
  * \brief          MD5 context setup

@@ -25,7 +25,7 @@ typedef struct
   UINT16 ExponentLength; /**< Key exponent length in bytes */
   PUINT8 Data;           /**< Data length is equal to Modulus Length */
 
-} PACKED SRsaInput, *PSRsaInput;
+} SRsaInput, *PSRsaInput;
 
 
 

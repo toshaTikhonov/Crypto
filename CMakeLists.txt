@@ -45,7 +45,7 @@ if (_GNU_SOURCE)
     add_definitions(-D_GNU_SOURCE)
 endif ()
 
-add_definitions("-DPACKED=__attribute__ ((aligned (sizeof(unsigned int))));")
+#add_definitions("-DPACKED=__attribute__ ((aligned (sizeof(unsigned int))));")
 
 # directories and source
 

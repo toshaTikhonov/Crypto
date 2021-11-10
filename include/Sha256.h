@@ -22,7 +22,7 @@ typedef struct
     UINT32 total[2];          /*!< The number of Bytes processed.  */
     UINT32 state[8];          /*!< The intermediate digest state.  */
     UINT8 buffer[64];         /*!< The data block being processed. */
-} PACKED SHA256_CTX;
+} SHA256_CTX;
 
 void sha256_init(SHA256_CTX* ctx);
 void sha256_update(SHA256_CTX* ctx, const UINT8* input, UINT32 len);
