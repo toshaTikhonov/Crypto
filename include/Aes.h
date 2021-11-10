@@ -1,11 +1,12 @@
 #ifndef _AES_H
 #define _AES_H
 
+#include "bastypes.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bastypes.h"
 /**
  * \brief          AES context structure
  */

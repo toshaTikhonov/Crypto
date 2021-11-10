@@ -1,12 +1,13 @@
 #ifndef __MAC_H__
 #define __MAC_H__
 
+#include "bastypes.h"
+#include "Crypto.urc"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bastypes.h"
-#include "Crypto.urc"
 
 /** Типы форматов входных данных для вычисления MAC */
 #define MAC_FORMAT_BIN                    0x00         /**< Входные данные обрабатываются "как есть" */

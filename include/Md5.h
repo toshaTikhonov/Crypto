@@ -4,11 +4,12 @@
 #ifndef __MD5IMP_H__
 #define __MD5IMP_H__
 
+#include "bastypes.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bastypes.h"
 
 
 #define MD5_HASH_SIZE 16

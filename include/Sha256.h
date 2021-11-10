@@ -1,11 +1,12 @@
 #ifndef __SHA256_H__
 #define __SHA256_H__
 
+#include "bastypes.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bastypes.h"
 
 #define SHA256_HASH_SIZE 32
 

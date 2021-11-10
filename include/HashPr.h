@@ -1,12 +1,13 @@
 #ifndef __HashPr_h__
 #define __HashPr_h__
 
+#include "bastypes.h"
+#include "Crypto.urc"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bastypes.h"
-#include "Crypto.urc"
 
 
 /** SHA1 Algorithm Indicator */

@@ -1,6 +1,8 @@
 #ifndef __DES_H__
 #define __DES_H__
 
+#include "bastypes.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

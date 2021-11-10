@@ -3,6 +3,10 @@
 
 #include "bastypes.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /******    CRC    ******/
 /*===========================================================================*/
 /** Константы, определяющие алгоритм расчёта CRC 
@@ -58,6 +62,10 @@ UINT16 Crc_GetResult(void);
         CryptoPrc_Crc_Init, CryptoPrc_Crc_AddByte (или CryptoPrc_Crc_AddBlock).
 */
 UINT32 Crc_GetResult32(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

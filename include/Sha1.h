@@ -17,11 +17,12 @@
 #ifndef __SHA1_H__
 #define __SHA1_H__
 
+#include "bastypes.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bastypes.h"
 
 #define SHA1_HASH_SIZE 20
 

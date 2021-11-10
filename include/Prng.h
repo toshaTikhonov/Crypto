@@ -1,12 +1,13 @@
 #ifndef __PRNG_H__
 #define __PRNG_H__
 
+#include "crt.h"
+#include "Crypto.urc"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "crt.h"
-#include "Crypto.urc"
 
 
 URC Prng_Init(void);
