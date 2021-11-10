@@ -1,9 +1,9 @@
 
 #include "crt.h"
 #include "Rsa.h"
-#include "Rsaref.h"
-#include "r_random.h"
-#include "NN.H"
+#include "Rsa/Rsaref.h"
+#include "Rsa/r_random.h"
+#include "Rsa/NN.H"
 
 static int RSAPublicBlock PROTO_LIST
 ((unsigned char *, unsigned int *, unsigned char *, unsigned int,
