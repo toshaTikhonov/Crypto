@@ -23,7 +23,8 @@ typedef struct
   UINT16 ModulusLength;  /**< Key modulus length in bytes */
   PUINT8 Exponent;       /**< Pointer to key exponent */
   UINT16 ExponentLength; /**< Key exponent length in bytes */
-  PUINT8 Data;           /**< Data length is equal to Modulus Length */
+  PUINT8 Data;           /**< Data */
+  UINT16 DataLength;     /**< Data length in bytes */
 
 } SRsaInput, *PSRsaInput;
 

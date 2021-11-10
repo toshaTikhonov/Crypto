@@ -81,7 +81,7 @@ static URC Rsa_TransformData (const SRsaInput *p_pRsaInput)
       m_RSA_Buffer,
       (unsigned int *) & m_RsaResultLength,
       p_pRsaInput -> Data,
-      (unsigned int) p_pRsaInput -> ModulusLength,
+      (unsigned int) p_pRsaInput->DataLength,
       & Key
     ) != 0
   )
