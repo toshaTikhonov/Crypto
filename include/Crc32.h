@@ -1,7 +1,6 @@
 #ifndef __CRCPR32_H__
 #define __CRCPR32_H__
 
-#include "urc.h"
 #include "bastypes.h"
 
 #ifdef __cplusplus

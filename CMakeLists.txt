@@ -77,6 +77,7 @@ set(SRC_FILES
         ${SRC_DIR}/CrcImp.c
         ${SRC_DIR}/CrcImp.h
         ${SRC_DIR}/Crc.c
+        ${SRC_DIR}/Crc32.c
         ${SRC_DIR}/Rsa.c
         ${SRC_DIR}/Prng.c
         ${INC_DIR}/HashPr.h
@@ -88,6 +89,7 @@ set(SRC_FILES
         ${INC_DIR}/Des.h
         ${INC_DIR}/Md5.h
         ${INC_DIR}/Crc.h
+        ${INC_DIR}/Crc32.h
         ${INC_DIR}/Rsa.h
         ${INC_DIR}/Prng.h
         ${INC_DIR}/crt.h
