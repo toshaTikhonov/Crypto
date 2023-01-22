@@ -210,7 +210,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib${LIBRARY_NAME}.pc
 
 set(TARGETS ${LIBRARY_NAME})
 if (BUILD_STATIC)
-    set(TARGETS ${TARGETS} library_name_static)
+    set(TARGETS ${TARGETS} Crypto_static)
 endif ()
 
 if (INSTALL_HEADER)
