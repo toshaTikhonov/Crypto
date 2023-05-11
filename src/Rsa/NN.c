@@ -24,10 +24,11 @@ static unsigned int NN_DigitBits PROTO_LIST ((NN_DIGIT));
    Assumes b[i] = 0 for i < len - digits * NN_DIGIT_LEN. (Otherwise most
    significant bytes are truncated.)
  */
-void NN_Decode (a, digits, b, len)
-NN_DIGIT *a;
-unsigned char *b;
-unsigned int digits, len;
+void NN_Decode (
+        NN_DIGIT *a,
+        unsigned int digits,
+        unsigned char *b,
+        unsigned int len)
 {
   NN_DIGIT t;
   int j;
@@ -51,10 +52,10 @@ unsigned int digits, len;
    Assumes NN_Bits (b, digits) <= 8 * len. (Otherwise most significant
    digits are truncated.)
  */
-void NN_Encode (a, len, b, digits)
-NN_DIGIT *b;
-unsigned char *a;
-unsigned int digits, len;
+void NN_Encode (unsigned char *a,
+                unsigned int len,
+                NN_DIGIT *b,
+                unsigned int digits)
 {
   NN_DIGIT t;
   int j;
@@ -74,9 +75,7 @@ unsigned int digits, len;
 
    Lengths: a[digits], b[digits].
  */
-void NN_Assign (a, b, digits)
-NN_DIGIT *a, *b;
-unsigned int digits;
+void NN_Assign (NN_DIGIT *a, NN_DIGIT *b, unsigned int digits)
 {
   unsigned int i;
 
@@ -88,9 +87,7 @@ unsigned int digits;
 
    Lengths: a[digits].
  */
-void NN_AssignZero (a, digits)
-NN_DIGIT *a;
-unsigned int digits;
+void NN_AssignZero (NN_DIGIT *a,unsigned int digits)
 {
   unsigned int i;
 
@@ -103,9 +100,7 @@ unsigned int digits;
    Lengths: a[digits].
    Requires b < digits * NN_DIGIT_BITS.
  */
-void NN_Assign2Exp (a, b, digits)
-NN_DIGIT *a;
-unsigned int b, digits;
+void NN_Assign2Exp (NN_DIGIT *a,unsigned int b, unsigned int digits)
 {
   NN_AssignZero (a, digits);
 
@@ -119,9 +114,7 @@ unsigned int b, digits;
 
    Lengths: a[digits], b[digits], c[digits].
  */
-NN_DIGIT NN_Add (a, b, c, digits)
-NN_DIGIT *a, *b, *c;
-unsigned int digits;
+NN_DIGIT NN_Add (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int digits)
 {
   NN_DIGIT ai, carry;
   unsigned int i;
@@ -145,9 +138,7 @@ unsigned int digits;
 
    Lengths: a[digits], b[digits], c[digits].
  */
-NN_DIGIT NN_Sub (a, b, c, digits)
-NN_DIGIT *a, *b, *c;
-unsigned int digits;
+NN_DIGIT NN_Sub (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int digits)
 {
   NN_DIGIT ai, borrow;
   unsigned int i;
@@ -172,9 +163,7 @@ unsigned int digits;
    Lengths: a[2*digits], b[digits], c[digits].
    Assumes digits < MAX_NN_DIGITS.
  */
-void NN_Mult (a, b, c, digits)
-NN_DIGIT *a, *b, *c;
-unsigned int digits;
+void NN_Mult (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int digits)
 {
   NN_DIGIT t[2*MAX_NN_DIGITS];
   unsigned int bDigits, cDigits, i;
@@ -199,9 +188,7 @@ unsigned int digits;
    Lengths: a[digits], b[digits].
    Requires c < NN_DIGIT_BITS.
  */
-NN_DIGIT NN_LShift (a, b, c, digits)
-NN_DIGIT *a, *b;
-unsigned int c, digits;
+NN_DIGIT NN_LShift (NN_DIGIT *a, NN_DIGIT *b, unsigned int c, unsigned int digits)
 {
   NN_DIGIT bi, carry;
   unsigned int i, t;
@@ -227,9 +214,7 @@ unsigned int c, digits;
    Lengths: a[digits], b[digits].
    Requires: c < NN_DIGIT_BITS.
  */
-NN_DIGIT NN_RShift (a, b, c, digits)
-NN_DIGIT *a, *b;
-unsigned int c, digits;
+NN_DIGIT NN_RShift (NN_DIGIT *a, NN_DIGIT *b, unsigned int c, unsigned int digits)
 {
   NN_DIGIT bi, carry;
   int i;
@@ -257,9 +242,7 @@ unsigned int c, digits;
    Assumes d > 0, cDigits < 2 * MAX_NN_DIGITS,
            dDigits < MAX_NN_DIGITS.
  */
-void NN_Div (a, b, c, cDigits, d, dDigits)
-NN_DIGIT *a, *b, *c, *d;
-unsigned int cDigits, dDigits;
+void NN_Div(NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int cDigits, NN_DIGIT *d, unsigned int dDigits)
 {
   NN_DIGIT ai, cc[2*MAX_NN_DIGITS+1], dd[MAX_NN_DIGITS], t;
   int i;
@@ -314,9 +297,7 @@ unsigned int cDigits, dDigits;
    Lengths: a[cDigits], b[bDigits], c[cDigits].
    Assumes c > 0, bDigits < 2 * MAX_NN_DIGITS, cDigits < MAX_NN_DIGITS.
  */
-void NN_Mod (a, b, bDigits, c, cDigits)
-NN_DIGIT *a, *b, *c;
-unsigned int bDigits, cDigits;
+void NN_Mod (NN_DIGIT *a, NN_DIGIT *b, unsigned int bDigits, NN_DIGIT *c,  unsigned int cDigits)
 {
   NN_DIGIT t[2 * MAX_NN_DIGITS];
   
@@ -332,9 +313,7 @@ unsigned int bDigits, cDigits;
    Lengths: a[digits], b[digits], c[digits], d[digits].
    Assumes d > 0, digits < MAX_NN_DIGITS.
  */
-void NN_ModMult (a, b, c, d, digits)
-NN_DIGIT *a, *b, *c, *d;
-unsigned int digits;
+void NN_ModMult (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, NN_DIGIT *d, unsigned int digits)
 {
   NN_DIGIT t[2*MAX_NN_DIGITS];
 
@@ -351,9 +330,7 @@ unsigned int digits;
    Lengths: a[dDigits], b[dDigits], c[cDigits], d[dDigits].
    Assumes d > 0, cDigits > 0, dDigits < MAX_NN_DIGITS.
  */
-void NN_ModExp (a, b, c, cDigits, d, dDigits)
-NN_DIGIT *a, *b, *c, *d;
-unsigned int cDigits, dDigits;
+void NN_ModExp (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int cDigits, NN_DIGIT *d,  unsigned int dDigits)
 {
   NN_DIGIT bPower[3][MAX_NN_DIGITS], ci, t[MAX_NN_DIGITS];
   int i;
@@ -404,9 +381,7 @@ unsigned int cDigits, dDigits;
    Lengths: a[digits], b[digits], c[digits].
    Assumes gcd (b, c) = 1, digits < MAX_NN_DIGITS.
  */
-void NN_ModInv (a, b, c, digits)
-NN_DIGIT *a, *b, *c;
-unsigned int digits;
+void NN_ModInv (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int digits)
 {
   NN_DIGIT q[MAX_NN_DIGITS], t1[MAX_NN_DIGITS], t3[MAX_NN_DIGITS],
     u1[MAX_NN_DIGITS], u3[MAX_NN_DIGITS], v1[MAX_NN_DIGITS],
@@ -457,9 +432,7 @@ unsigned int digits;
    Lengths: a[digits], b[digits], c[digits].
    Assumes b > c, digits < MAX_NN_DIGITS.
  */
-void NN_Gcd (a, b, c, digits)
-NN_DIGIT *a, *b, *c;
-unsigned int digits;
+void NN_Gcd (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT *c, unsigned int digits)
 {
   NN_DIGIT t[MAX_NN_DIGITS], u[MAX_NN_DIGITS], v[MAX_NN_DIGITS];
 
@@ -485,9 +458,7 @@ unsigned int digits;
 
    Lengths: a[digits], b[digits].
  */
-int NN_Cmp (a, b, digits)
-NN_DIGIT *a, *b;
-unsigned int digits;
+int NN_Cmp (NN_DIGIT *a, NN_DIGIT *b, unsigned int digits)
 {
   int i;
   
@@ -505,9 +476,7 @@ unsigned int digits;
 
    Lengths: a[digits].
  */
-int NN_Zero (a, digits)
-NN_DIGIT *a;
-unsigned int digits;
+int NN_Zero (NN_DIGIT *a, unsigned int digits)
 {
   unsigned int i;
   
@@ -522,9 +491,7 @@ unsigned int digits;
 
    Lengths: a[digits].
  */
-unsigned int NN_Bits (a, digits)
-NN_DIGIT *a;
-unsigned int digits;
+unsigned int NN_Bits (NN_DIGIT *a, unsigned int digits)
 {
   if ((digits = NN_Digits (a, digits)) == 0)
     return (0);
@@ -536,9 +503,7 @@ unsigned int digits;
 
    Lengths: a[digits].
  */
-unsigned int NN_Digits (a, digits)
-NN_DIGIT *a;
-unsigned int digits;
+unsigned int NN_Digits (NN_DIGIT *a, unsigned int digits)
 {
   int i;
   
@@ -553,9 +518,7 @@ unsigned int digits;
 
    Lengths: a[digits], b[digits], d[digits].
  */
-static NN_DIGIT NN_AddDigitMult (a, b, c, d, digits)
-NN_DIGIT *a, *b, c, *d;
-unsigned int digits;
+static NN_DIGIT NN_AddDigitMult (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT c, NN_DIGIT *d, unsigned int digits)
 {
   NN_DIGIT carry, t[2];
   unsigned int i;
@@ -582,9 +545,7 @@ unsigned int digits;
 
    Lengths: a[digits], b[digits], d[digits].
  */
-static NN_DIGIT NN_SubDigitMult (a, b, c, d, digits)
-NN_DIGIT *a, *b, c, *d;
-unsigned int digits;
+static NN_DIGIT NN_SubDigitMult (NN_DIGIT *a, NN_DIGIT *b, NN_DIGIT c, NN_DIGIT *d, unsigned int digits)
 {
   NN_DIGIT borrow, t[2];
   unsigned int i;
@@ -609,8 +570,7 @@ unsigned int digits;
 
 /* Returns the significant length of a in bits, where a is a digit.
  */
-static unsigned int NN_DigitBits (a)
-NN_DIGIT a;
+static unsigned int NN_DigitBits (NN_DIGIT a)
 {
   unsigned int i;
   

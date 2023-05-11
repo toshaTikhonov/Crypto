@@ -5,10 +5,6 @@ set(LIBRARY_NAME "Crypto")
 project(${LIBRARY_NAME} LANGUAGES C )
 
 set(CMAKE_C_STANDARD 99)
-if (NOT MSVC)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
-endif()
-
 
 # library info
 

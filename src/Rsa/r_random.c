@@ -58,10 +58,10 @@ int R_GetRandomBytesNeeded (unsigned int *bytesNeeded, R_RANDOM_STRUCT *randomSt
   return (0);
 }
 
-int R_GenerateBytes (block, blockLen, randomStruct)
-unsigned char *block;                                              /* block */
-unsigned int blockLen;                                   /* length of block */
-R_RANDOM_STRUCT *randomStruct;                          /* random structure */
+int R_GenerateBytes (
+unsigned char *block,                                              /* block */
+unsigned int blockLen,                                   /* length of block */
+R_RANDOM_STRUCT *randomStruct)                          /* random structure */
 {
     Md5Context context;
     unsigned int available, i;

@@ -298,12 +298,12 @@ int RSAPrivateDecrypt (unsigned char *output,
    Assumes inputLen < length of modulus.
    Requires input < modulus.
  */
-static int RSAPublicBlock (output, outputLen, input, inputLen, publicKey)
-        unsigned char *output;                                      /* output block */
-        unsigned int *outputLen;                          /* length of output block */
-        unsigned char *input;                                        /* input block */
-        unsigned int inputLen;                             /* length of input block */
-        R_RSA_PUBLIC_KEY *publicKey;                              /* RSA public key */
+static int RSAPublicBlock (
+        unsigned char *output,                                      /* output block */
+        unsigned int *outputLen,                          /* length of output block */
+        unsigned char *input,                                        /* input block */
+        unsigned int inputLen,                             /* length of input block */
+        R_RSA_PUBLIC_KEY *publicKey)                              /* RSA public key */
 {
     NN_DIGIT c[MAX_NN_DIGITS], e[MAX_NN_DIGITS], m[MAX_NN_DIGITS],
             n[MAX_NN_DIGITS];
@@ -338,12 +338,12 @@ static int RSAPublicBlock (output, outputLen, input, inputLen, publicKey)
    Assumes inputLen < length of modulus.
    Requires input < modulus.
  */
-static int RSAPrivateBlock (output, outputLen, input, inputLen, privateKey)
-        unsigned char *output;                                      /* output block */
-        unsigned int *outputLen;                          /* length of output block */
-        unsigned char *input;                                        /* input block */
-        unsigned int inputLen;                             /* length of input block */
-        R_RSA_PRIVATE_KEY *privateKey;                           /* RSA private key */
+static int RSAPrivateBlock (
+        unsigned char *output,                                      /* output block */
+        unsigned int *outputLen,                          /* length of output block */
+        unsigned char *input,                                        /* input block */
+        unsigned int inputLen,                             /* length of input block */
+        R_RSA_PRIVATE_KEY *privateKey)                           /* RSA private key */
 {
     NN_DIGIT c[MAX_NN_DIGITS], cP[MAX_NN_DIGITS], cQ[MAX_NN_DIGITS],
             dP[MAX_NN_DIGITS], dQ[MAX_NN_DIGITS], mP[MAX_NN_DIGITS],

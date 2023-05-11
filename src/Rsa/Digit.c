@@ -11,8 +11,7 @@
 /** @brief Computes a = b * c, where b and c are digits.
    Lengths: a[2].
  */
-void NN_DigitMult (a, b, c)
-NN_DIGIT a[2], b, c;
+void NN_DigitMult (NN_DIGIT a[2], NN_DIGIT b, NN_DIGIT c)
 {
   NN_DIGIT t, u;
   NN_HALF_DIGIT bHigh, bLow, cHigh, cLow;
@@ -41,8 +40,7 @@ NN_DIGIT a[2], b, c;
    Assumes b[1] < c and HIGH_HALF (c) > 0. For efficiency, c should be
    normalized.
  */
-void NN_DigitDiv (a, b, c)
-NN_DIGIT *a, b[2], c;
+void NN_DigitDiv (NN_DIGIT *a, NN_DIGIT b[2], NN_DIGIT c)
 {
   NN_DIGIT t[2], u, v;
   NN_HALF_DIGIT aHigh, aLow, cHigh, cLow;
