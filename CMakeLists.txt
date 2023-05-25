@@ -4,7 +4,7 @@ set(LIBRARY_NAME "Crypto")
 
 project(${LIBRARY_NAME} LANGUAGES C )
 
-set(CMAKE_C_STANDARD 99)
+#set(CMAKE_C_STANDARD 99)
 
 # library info
 
@@ -102,7 +102,7 @@ if (NOT MSVC)
             SOVERSION "${LIBRARY_SOVERSION}")
 endif()
 if (WIN32)
-    set_target_properties(${LIBRARY_NAME} PROPERTIES SUFFIX "-${LIBRARY_VERSION_MAJOR}.dll")
+    set_target_properties(${LIBRARY_NAME} PROPERTIES SUFFIX "-${LIBRARY_VERSION}.dll")
 endif ()
 
 # static library
