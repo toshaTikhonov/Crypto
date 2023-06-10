@@ -7,7 +7,7 @@
 
 //#include "global.h"
 #include "Rsaref.h"
-#include "NN.H"
+#include "NN.h"
 #include "Digit.h"
 
 static NN_DIGIT NN_AddDigitMult PROTO_LIST 

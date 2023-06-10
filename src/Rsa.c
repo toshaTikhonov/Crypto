@@ -3,7 +3,7 @@
 #include "Rsa.h"
 #include "Rsa/Rsaref.h"
 #include "Rsa/r_random.h"
-#include "Rsa/NN.H"
+#include "Rsa/NN.h"
 
 static int RSAPublicBlock PROTO_LIST
 ((unsigned char *, unsigned int *, unsigned char *, unsigned int,

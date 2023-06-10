@@ -5,7 +5,7 @@
       Inc., created 1991. All rights reserved.
  */
 #include "Rsaref.h"
-#include "NN.H"
+#include "NN.h"
 #include "Digit.h"
 
 /** @brief Computes a = b * c, where b and c are digits.
