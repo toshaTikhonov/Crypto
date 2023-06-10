@@ -5,6 +5,14 @@ set(LIBRARY_NAME "Crypto")
 project(${LIBRARY_NAME} LANGUAGES C )
 
 set(CMAKE_C_STANDARD 99)
+if (NOT WIN32)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
+endif()
+
+if(WIN32)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
 
 # library info
 
@@ -94,7 +102,7 @@ set(SRC_FILES
 # shared library
 
 add_library(${LIBRARY_NAME} SHARED ${SRC_FILES})
-if (NOT MSVC)
+if (NOT WIN32)
     set_target_properties(${LIBRARY_NAME} PROPERTIES
             COMPILE_OPTIONS -Wextra
             PUBLIC_HEADER "${INC_DIR}/HashPr.h;${INC_DIR}/Sha1.h;${INC_DIR}/Sha256.h;${INC_DIR}/Base64.h;${INC_DIR}/Aes.h;${INC_DIR}/Mac.h;${INC_DIR}/Md5.h;${INC_DIR}/Des.h;${PROJECT_BINARY_DIR}/helpers-cfg.h"
@@ -102,7 +110,7 @@ if (NOT MSVC)
             SOVERSION "${LIBRARY_SOVERSION}")
 endif()
 if (WIN32)
-    set_target_properties(${LIBRARY_NAME} PROPERTIES SUFFIX "-${LIBRARY_VERSION_MAJOR}.dll")
+    set_target_properties(${LIBRARY_NAME} PROPERTIES SUFFIX "-${LIBRARY_VERSION}.dll")
 endif ()
 
 # static library
