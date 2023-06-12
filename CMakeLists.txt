@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.18.0)
 
 set(LIBRARY_NAME "Crypto")
 
@@ -135,8 +135,8 @@ include_directories(${PROJECT_BINARY_DIR})
 
 # documentation
 
-option(BUILD_HELPERS_DOCUMENTATION "Build the documentation." OFF)
-if (BUILD_HELPERS_DOCUMENTATION)
+option(BUILD_CRYPTO_DOCUMENTATION "Build the documentation." OFF)
+if (BUILD_CRYPTO_DOCUMENTATION)
     find_package(Doxygen)
     if (DOXYGEN_FOUND)
         set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/doc/doxygen.cfg)
@@ -292,7 +292,7 @@ add_custom_target(dist_crypto
         COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 message(STATUS "Build static library: ${BUILD_STATIC}")
-message(STATUS "Build testing tree: ${BUILD_HELPERS_TESTING}")
+message(STATUS "Build testing tree: ${BUILD_CRYPTO_TESTING}")
 message(STATUS "Install the header files: ${INSTALL_HEADER}")
 message(STATUS "Build RPM package: ${BUILD_RPM}")
-message(STATUS "Build documentation: ${BUILD_HELPERS_DOCUMENTATION}")
+message(STATUS "Build documentation: ${BUILD_CRYPTO_DOCUMENTATION}")
