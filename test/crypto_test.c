@@ -374,6 +374,8 @@ coefficient: b5 3b 46 e3 6d 17 22 21 96 80 cc df b6 76 4a c7 8f 54 c0 65 5a a4 8
     RsaInput.ExponentLength = 3;
 
     RsaInput.Data = EthalonData;
+    RsaInput.DataLength = 128;
+
 
     (void)Rsa_Encrypt (& RsaInput);
 
@@ -392,6 +394,7 @@ coefficient: b5 3b 46 e3 6d 17 22 21 96 80 cc df b6 76 4a c7 8f 54 c0 65 5a a4 8
     RsaInput.ExponentLength = 128;
 
     RsaInput.Data = IntermediateResult;
+    RsaInput.DataLength = 128;
 
     (void)Rsa_Decrypt (& RsaInput);
 

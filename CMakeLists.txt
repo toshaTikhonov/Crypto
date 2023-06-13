@@ -29,10 +29,12 @@ set(LIBRARY_SOVERSION "${LIBRARY_VERSION_MAJOR}.${LIBRARY_VERSION_MINOR}")
 
 # cmake modules
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+set(O_CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+list(APPEND CMAKE_MODULE_PATH "${O_CMAKE_MODULE_PATH}")
 
 include(GNUInstallDirs)
 include(CheckSymbolExists)
+include(CMakePackageConfigHelpers)
 
 # check if _GNU_SOURCE is available
 
@@ -160,11 +162,9 @@ endif ()
 option(BUILD_CRYPTO_TESTING "Build the testing tree." OFF) # because we don not use include(CTest)
 
 if (BUILD_CRYPTO_TESTING)
-    include(FindCheck)
     find_package(Check)
     if (CHECK_FOUND)
         if (NOT WIN32 AND NOT APPLE)
-            include(FindSubunit)
             find_package(Subunit REQUIRED)
         endif ()
 
@@ -173,29 +173,29 @@ if (BUILD_CRYPTO_TESTING)
         set(CMAKE_CTEST_COMMAND ctest -V)
 
         set(TST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
-        set(LIBS ${LIBRARY_NAME} ${LIBS} ${CHECK_LIBRARIES})
+        set(TEST_LIBS ${LIBRARY_NAME} Check::Check)
         if (NOT WIN32)
             find_package(Threads REQUIRED)
-            set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT} m)
+            list(APPEND TEST_LIBS Threads::Threads m)
         endif ()
-        if (NOT APPLE)
-            set(LIBS ${LIBS} rt)
+        if (NOT APPLE AND NOT MSVC)
+            list(APPEND TEST_LIBS rt)
         endif ()
         if (NOT WIN32 AND NOT APPLE)
-            set(LIBS ${LIBS} ${SUBUNIT_LIBRARIES})
+            list(APPEND TEST_LIBS Subunit::Subunit rt)
         endif ()
 
         set(TESTS crypto_test)
 
         configure_file(
-                "${CMAKE_MODULE_PATH}/CTestCustom.cmake.in"
+                "${O_CMAKE_MODULE_PATH}/CTestCustom.cmake.in"
                 "${CMAKE_CURRENT_BINARY_DIR}/CTestCustom.cmake"
                 @ONLY)
 
         foreach (t ${TESTS})
             add_executable(${t} EXCLUDE_FROM_ALL ${TST_DIR}/${t}.c)
-            target_include_directories(${t} PUBLIC ${TST_DIR} ${CHECK_INCLUDE_DIRS} ${SUBUNIT_INCLUDE_DIRS})
-            target_link_libraries(${t} PUBLIC ${LIBS})
+            target_include_directories(${t} PUBLIC ${TST_DIR})
+            target_link_libraries(${t} PRIVATE ${TEST_LIBS})
             add_test(NAME ${t}
                     WORKING_DIRECTORY ${TST_DIR}
                     COMMAND ${t})
