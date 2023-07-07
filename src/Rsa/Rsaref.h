@@ -1,8 +1,8 @@
 /* RSAREF.H - header file for RSAREF cryptographic toolkit
 
-    <b>Список изменений:</b>
-    06/07/2004  [VT], Убраны прототипы функций, относившихся к удалённым 
-        из проекта файлам r_enhance.c и desc.c 
+    <b>РЎРїРёСЃРѕРє РёР·РјРµРЅРµРЅРёР№:</b>
+    06/07/2004  [VT], РЈР±СЂР°РЅС‹ РїСЂРѕС‚РѕС‚РёРїС‹ С„СѓРЅРєС†РёР№, РѕС‚РЅРѕСЃРёРІС€РёС…СЃСЏ Рє СѓРґР°Р»С‘РЅРЅС‹Рј 
+        РёР· РїСЂРѕРµРєС‚Р° С„Р°Р№Р»Р°Рј r_enhance.c Рё desc.c 
  */
 
 /* Copyright (C) RSA Laboratories, a division of RSA Data Security,
