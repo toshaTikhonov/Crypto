@@ -22,6 +22,3 @@ jobs:
         cmake -DBUILD_CRYPTO_TESTING=on -DBUILD_CRYPTO_DOCUMENTATION=on ..
         make test package doc
         sudo make install
-        cd ..
-        make
-        make clean check
