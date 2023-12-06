@@ -107,7 +107,7 @@ add_library(${LIBRARY_NAME} SHARED ${SRC_FILES})
 if (NOT WIN32)
     set_target_properties(${LIBRARY_NAME} PROPERTIES
             COMPILE_OPTIONS -Wextra
-            PUBLIC_HEADER "${INC_DIR}/HashPr.h;${INC_DIR}/Sha1.h;${INC_DIR}/Sha256.h;${INC_DIR}/Base64.h;${INC_DIR}/Aes.h;${INC_DIR}/Mac.h;${INC_DIR}/Md5.h;${INC_DIR}/Des.h;${PROJECT_BINARY_DIR}/helpers-cfg.h"
+            PUBLIC_HEADER "${INC_DIR}/HashPr.h;${INC_DIR}/Sha1.h;${INC_DIR}/Sha256.h;${INC_DIR}/Base64.h;${INC_DIR}/Aes.h;${INC_DIR}/Mac.h;${INC_DIR}/Md5.h;${INC_DIR}/Des.h;${PROJECT_BINARY_DIR}/crypto-cfg.h"
             VERSION "${LIBRARY_VERSION}"
             SOVERSION "${LIBRARY_SOVERSION}")
 endif()
