@@ -20,7 +20,7 @@ set(PROJECT_DESCRIPTION "Crypto library for C applications")
 set(PROJECT_HOMEPAGE_URL "https://github.com/toshaTikhonov/Crypto/")
 set(PROJECT_BUGREPORT_PATH "https://github.com/toshaTikhonov/Crypto/issues")
 set(LIBRARY_VERSION_MAJOR "0")
-set(LIBRARY_VERSION_MINOR "3")
+set(LIBRARY_VERSION_MINOR "4")
 set(LIBRARY_VERSION_PATCH "0")
 set(PROJECT_VERSION "${LIBRARY_VERSION_MAJOR}.${LIBRARY_VERSION_MINOR}.${LIBRARY_VERSION_PATCH}")
 
