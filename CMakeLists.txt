@@ -205,7 +205,7 @@ endif ()
 
 # install target
 
-option(INSTALL_HEADER "Install the header files" ON) # Install header file or not
+option(INSTALL_CRYPTO_HEADER "Install the header files" ON) # Install header file or not
 
 configure_file(lib${LIBRARY_NAME}.pc.in lib${LIBRARY_NAME}.pc @ONLY)
 
@@ -217,7 +217,7 @@ if (BUILD_STATIC)
     set(TARGETS ${TARGETS} Crypto_static)
 endif ()
 
-if (INSTALL_HEADER)
+if (INSTALL_CRYPTO_HEADER)
     install(TARGETS ${TARGETS}
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -251,7 +251,7 @@ set(CPACK_PACKAGE_VERSION_MAJOR ${LIBRARY_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${LIBRARY_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${LIBRARY_VERSION_PATCH})
 
-if (INSTALL_HEADER)
+if (INSTALL_CRYPTO_HEADER)
     set(PACKAGE_FILE_NAME
             "lib${CMAKE_PROJECT_NAME}-dev_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 else ()
@@ -268,8 +268,8 @@ set(CPACK_PACKAGE_VERSION_MAJOR ${LIBRARY_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${LIBRARY_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${LIBRARY_VERSION_PATCH})
 
-option(BUILD_RPM "Build a RPM for your system" OFF)
-if (BUILD_RPM)
+option(BUILD_CRYPTO_RPM "Build a RPM for your system" OFF)
+if (BUILD_CRYPTO_RPM)
   set(CPACK_GENERATOR "TGZ")
   set(CPACK_RPM_PACKAGE_LICENSE "LGPL")
   set(CPACK_RPM_PACKAGE_URL "https://github.com/toshaTikhonov/Crypto/")
@@ -293,6 +293,6 @@ add_custom_target(dist_crypto
 
 message(STATUS "Build static library: ${BUILD_STATIC}")
 message(STATUS "Build testing tree: ${BUILD_CRYPTO_TESTING}")
-message(STATUS "Install the header files: ${INSTALL_HEADER}")
-message(STATUS "Build RPM package: ${BUILD_RPM}")
+message(STATUS "Install the header files: ${INSTALL_CRYPTO_HEADER}")
+message(STATUS "Build RPM package: ${BUILD_CRYPTO_RPM}")
 message(STATUS "Build documentation: ${BUILD_CRYPTO_DOCUMENTATION}")
