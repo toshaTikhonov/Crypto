@@ -85,8 +85,8 @@ R_RANDOM_STRUCT *randomStruct)                          /* random structure */
         available = 16;
 
         /* increment state */
-        for (i = 0; i < 32; i++)
-            if (randomStruct->state[31-i]++)
+        for (i = 0; i < 16; i++)
+            if (randomStruct->state[ 15 - i ]++)
                 break;
     }
 
