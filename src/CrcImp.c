@@ -12,7 +12,7 @@
 #include "CrcImp.h"
 
 
-#define BITMASK(X) (1 << (X))
+#define BITMASK(X) (1l << (X))
 /** Регистр, в котором накапливается значение CRC */
 static UINT32 s_wRegister;
 
@@ -74,7 +74,7 @@ void CrcPrc_AddByte(PSCrcAlgorithm pCrcParams, UINT8 ucByte)
         else
             s_wRegister <<= 1;
         if(pCrcParams->Width < 32)
-            s_wRegister &= ((1 << pCrcParams->Width) - 1);
+            s_wRegister &= BITMASK(pCrcParams->Width - 1);
     }
 }
 

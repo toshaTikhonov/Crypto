@@ -181,15 +181,15 @@ URC Des_Cbc_Encrypt (PCUINT8 p_Key,
                      UINT8   p_Padding,
                      PUINT8  p_pOutBuffer)
 {
-    UINT8 Buf [8], i, Quotient;
+    UINT8 Buf [8];
     UINT8 Block[8];
-
+    int i;
 
     if (p_Key == NULL || p_pInBuffer == NULL || p_pOutBuffer == NULL)
         return URC_CRYPTO_INVALID_PARAMETER;
 
      /*Если не кратно 8, то нужен Padding*/
-    if(p_Len%8 > 0)
+    if(((int)(p_Len % 8)) > 0)
     {
         switch(p_Padding)
         {
@@ -210,10 +210,6 @@ URC Des_Cbc_Encrypt (PCUINT8 p_Key,
             break;
         }
     }
-    else
-    {
-        Quotient = (UINT8)(p_Len / 8);
-    }
 
     /*Инициализация начального вектора*/
     if(p_pIV == NULL)
@@ -227,7 +223,7 @@ URC Des_Cbc_Encrypt (PCUINT8 p_Key,
 
     memset(Block,0,sizeof(Block));
 
-    for (i = 0; i < Quotient; i ++)
+    for (i = 0; i < (p_Len / 8); i ++)
     {  
         
         XOR(Block, p_pInBuffer  + i * 8, Buf , sizeof(Buf));
@@ -266,8 +262,9 @@ URC Des_Cbc_Decrypt (PCUINT8 p_Key,
                      PUINT8  p_pOutBuffer)
 {
 
-    UINT8 Buf [8], i, Quotient;
+    UINT8 Buf [8];
     UINT8 Block[8];
+    int i;
 
 
     if (p_Key == NULL || p_pInBuffer == NULL || p_pOutBuffer == NULL)
@@ -295,11 +292,6 @@ URC Des_Cbc_Decrypt (PCUINT8 p_Key,
             break;
         }
     }
-    else
-    {
-        Quotient = (UINT8)(p_Len / 8);
-    }
-
 
     /*Инициализация начального вектора*/
     if(p_pIV == NULL)
@@ -313,7 +305,7 @@ URC Des_Cbc_Decrypt (PCUINT8 p_Key,
 
     memset(Block,0,sizeof(Block));
 
-    for (i = 0; i < Quotient; i ++)
+    for (i = 0; i < (p_Len / 8); i ++)
     {  
         /*Сохраняем для копирования в Buf, который используется в XOR в следующем блоке*/       
         MemCpy(Block,p_pInBuffer + i * 8,8);
